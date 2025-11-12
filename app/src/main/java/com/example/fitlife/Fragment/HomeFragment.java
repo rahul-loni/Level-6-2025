@@ -1,4 +1,4 @@
-package Fragment;
+package com.example.fitlife.Fragment;
 
 import android.os.Bundle;
 

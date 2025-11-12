@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:gravity="center"
-    tools:context="Auth.SignupPage">
+    tools:context=".Auth.SignupPage">
 
 
     <TextView

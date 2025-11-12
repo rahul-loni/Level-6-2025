@@ -11,11 +11,8 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import Auth.SignupPage;
+import com.example.fitlife.Auth.SignupPage;
 
 public class Splash_Screen extends AppCompatActivity {
 
@@ -38,7 +35,7 @@ public class Splash_Screen extends AppCompatActivity {
             public void run() {
             try {
                 sleep(5000);
-                Intent intent=new Intent(Splash_Screen.this, SignupPage.class);
+                Intent intent=new Intent(Splash_Screen.this, MainActivity.class);
                 startActivity(intent);
             }catch (InterruptedException e){
                 e.printStackTrace();

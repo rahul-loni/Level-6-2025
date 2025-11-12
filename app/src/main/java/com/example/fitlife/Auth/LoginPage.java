@@ -1,4 +1,4 @@
-package Auth;
+package com.example.fitlife.Auth;
 
 import android.os.Bundle;
 
