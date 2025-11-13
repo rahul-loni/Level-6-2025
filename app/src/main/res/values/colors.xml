@@ -1,7 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="dark_yellow">#636535</color>
+
+    <!-- Primary Colors - Main App Theme -->
+    <color name="primary_color">#6200EE</color>          <!-- Purple - Primary brand color -->
+    <color name="primary_dark_color">#3700B3</color>     <!-- Dark Purple - Status bar -->
+    <color name="primary_light_color">#BB86FC</color>    <!-- Light Purple - Accents -->
+
+    <!-- Accent Colors -->
+    <color name="accent_color">#03DAC5</color>           <!-- Teal - Buttons, highlights -->
+    <color name="accent_dark_color">#018786</color>      <!-- Dark Teal -->
+
+    <!-- Background Colors -->
+    <color name="background_color">#F5F5F5</color>       <!-- Light Gray - Main background -->
+    <color name="surface_color">#FFFFFF</color>          <!-- White - Cards, surfaces -->
+
+    <!-- Text Colors -->
+    <color name="text_primary">#212121</color>           <!-- Almost Black - Main text -->
+    <color name="text_secondary">#757575</color>         <!-- Gray - Secondary text -->
+    <color name="text_hint">#9E9E9E</color>              <!-- Light Gray - Hints -->
+    <color name="text_disabled">#BDBDBD</color>          <!-- Very Light Gray - Disabled -->
+
+    <!-- Status Colors -->
+    <color name="success_color">#4CAF50</color>          <!-- Green - Completed status -->
+    <color name="error_color">#F44336</color>            <!-- Red - Errors, delete -->
+    <color name="warning_color">#FF9800</color>          <!-- Orange - Warnings -->
+    <color name="info_color">#2196F3</color>             <!-- Blue - Information -->
+
+    <!-- Standard Colors -->
+    <color name="white">#FFFFFF</color>                  <!-- Pure White -->
+    <color name="black">#000000</color>                  <!-- Pure Black -->
+
+    <!-- Transparent Colors -->
+    <color name="transparent">#00000000</color>          <!-- Fully transparent -->
+    <color name="black_overlay">#66000000</color>        <!-- 40% Black overlay -->
+    <color name="white_overlay">#66FFFFFF</color>        <!-- 40% White overlay -->
+
+    <!-- Divider Colors -->
+    <color name="divider_color">#E0E0E0</color>          <!-- Light Gray - Dividers -->
+
+    <!-- Card Colors -->
+    <color name="card_background">#FFFFFF</color>        <!-- White - Card background -->
+    <color name="card_stroke">#EEEEEE</color>            <!-- Very Light Gray - Card borders -->
+
+    <!-- Button Colors -->
+    <color name="button_primary">#6200EE</color>         <!-- Purple - Primary buttons -->
+    <color name="button_secondary">#FFFFFF</color>       <!-- White - Secondary buttons -->
+    <color name="button_disabled">#E0E0E0</color>        <!-- Light Gray - Disabled buttons -->
+
+    <!-- Input Colors -->
+    <color name="input_background">#F5F5F5</color>       <!-- Light Gray - Input background -->
+    <color name="input_stroke">#BDBDBD</color>           <!-- Gray - Input borders -->
+    <color name="input_focused">#6200EE</color>          <!-- Purple - Focused input -->
+
+    <!-- Bottom Navigation Colors -->
+    <color name="bottom_nav_selected">#6200EE</color>    <!-- Purple - Selected tab -->
+    <color name="bottom_nav_unselected">#757575</color>  <!-- Gray - Unselected tab -->
+
+    <!-- FAB Colors -->
+    <color name="fab_background">#6200EE</color>         <!-- Purple - FAB background -->
+    <color name="fab_icon">#FFFFFF</color>               <!-- White - FAB icon -->
+
+    <!-- Ripple Effect Colors -->
+    <color name="ripple_color">#1A6200EE</color>         <!-- 10% Purple - Ripple effect -->
+
+    <!-- Shadow Colors -->
+    <color name="shadow_light">#1A000000</color>         <!-- 10% Black - Light shadow -->
+    <color name="shadow_medium">#33000000</color>        <!-- 20% Black - Medium shadow -->
+    <color name="shadow_dark">#4D000000</color>          <!-- 30% Black - Dark shadow -->
 
 </resources>

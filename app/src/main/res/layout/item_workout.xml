@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ==========================================
+     FILE: item_workout.xml
+     LOCATION: res/layout/item_workout.xml
+     Individual Workout Card for RecyclerView
+     Features: Swipe gestures, Material Card Design
+     ========================================== -->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/card_background"
+    app:rippleColor="@color/ripple_color">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Checkmark Icon (visible when completed) -->
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_check_24"
+            android:visibility="gone"
+            android:contentDescription="Completed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/success_color"
+            tools:visibility="visible" />
+
+        <!-- Workout Name -->
+        <TextView
+            android:id="@+id/tv_workout_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Full-Body Strength Training"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/iv_check"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Full-Body Strength Training" />
+
+        <!-- Workout Description -->
+        <TextView
+            android:id="@+id/tv_workout_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Complete workout targeting all major muscle groups"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_workout_name"
+            tools:text="Complete workout targeting all major muscle groups" />
+
+        <!-- Divider Line -->
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_workout_description" />
+
+        <!-- Equipment Info -->
+        <TextView
+            android:id="@+id/tv_workout_equipment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:drawableStart="@drawable/baseline_display_settings_24"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/primary_color"
+            android:text="Equipment: Dumbbells, Yoga Mat"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/tv_workout_duration"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            tools:text="Equipment: Dumbbells" />
+
+        <!-- Duration Info -->
+        <TextView
+            android:id="@+id/tv_workout_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/baseline_access_time_24"
+            android:drawablePadding="4dp"
+            android:drawableTint="@color/primary_color"
+            android:text="30 min"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_workout_equipment"
+            tools:text="30 min" />
+
+        <!-- Swipe Gesture Hint (Optional - can be removed) -->
+        <TextView
+            android:id="@+id/tv_swipe_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="← Swipe left to delete • Swipe right to complete →"
+            android:textAlignment="center"
+            android:textColor="@color/text_secondary"
+            android:textSize="10sp"
+            android:alpha="0.6"
+            android:fontFamily="sans-serif-light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_workout_equipment" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
