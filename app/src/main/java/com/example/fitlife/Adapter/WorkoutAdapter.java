@@ -9,11 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fitlife.Model.Workout;
+import com.example.fitlife.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder{
+public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder<>{
     private Context context;
     private List<Workout> workoutList;
     private OnWorkoutClickListener listener;
@@ -38,5 +39,21 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
     public WorkoutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_workout, parent, false);
         return new WorkoutViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull WorkoutAdapter.WorkoutViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+    public class WorkoutViewHolder extends RecyclerView.ViewHolder {
+        public WorkoutViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 }
