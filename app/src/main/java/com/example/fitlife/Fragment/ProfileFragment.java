@@ -1,66 +1,114 @@
 package com.example.fitlife.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.fitlife.Auth.LoginPage;
+import com.example.fitlife.Database.DatabaseHelper;
 import com.example.fitlife.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class ProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private TextView tvProfileEmail, tvWorkoutCount, tvCompletedCount, tvMemberSince;
+    private Button btnEditProfile, btnNotifications, btnLogout;
+    private FirebaseAuth mAuth;
+    private DatabaseHelper dbHelper;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        dbHelper = DatabaseHelper.getInstance(getContext());
+
+        // Initialize views
+        tvProfileEmail = view.findViewById(R.id.tv_profile_email);
+        tvWorkoutCount = view.findViewById(R.id.tv_workout_count);
+        tvCompletedCount = view.findViewById(R.id.tv_completed_count);
+        tvMemberSince = view.findViewById(R.id.tv_member_since);
+        btnEditProfile = view.findViewById(R.id.btn_edit_profile);
+        btnNotifications = view.findViewById(R.id.btn_notifications);
+        btnLogout = view.findViewById(R.id.btn_logout);
+
+        // Load user data
+        loadUserData();
+        loadStatistics();
+
+        // Setup button listeners
+        btnEditProfile.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Edit Profile feature coming soon!", Toast.LENGTH_SHORT).show();
+        });
+
+        btnNotifications.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Notification settings coming soon!", Toast.LENGTH_SHORT).show();
+        });
+
+        btnLogout.setOnClickListener(v -> showLogoutDialog());
+
+        return view;
+    }
+
+    private void loadUserData() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            tvProfileEmail.setText(user.getEmail());
+
+            // Get user creation date
+            long creationTimestamp = user.getMetadata().getCreationTimestamp();
+            SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+            String memberSince = sdf.format(new Date(creationTimestamp));
+            tvMemberSince.setText("Member since: " + memberSince);
         }
     }
 
+    private void loadStatistics() {
+        int totalWorkouts = dbHelper.getWorkoutCount();
+        int completedWorkouts = dbHelper.getCompletedWorkoutCount();
+
+        tvWorkoutCount.setText("Total Workouts: " + totalWorkouts);
+        tvCompletedCount.setText("Completed: " + completedWorkouts);
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+    public void onResume() {
+        super.onResume();
+        loadStatistics();
+    }
+
+    private void showLogoutDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Logout", (dialog, which) -> {
+                    mAuth.signOut();
+                    Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(getContext(), LoginPage.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    getActivity().finish();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 }
