@@ -1,5 +1,6 @@
 package com.example.fitlife;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -12,14 +13,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.fitlife.Model.WorkoutLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddLocation extends AppCompatActivity {
+
     private static final int LOCATION_PERMISSION_REQUEST = 200;
 
     private TextInputEditText etLocationName, etAddress;

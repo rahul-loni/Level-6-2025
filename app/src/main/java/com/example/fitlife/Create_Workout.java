@@ -1,5 +1,6 @@
 package com.example.fitlife;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,13 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.fitlife.Database.DatabaseHelper;
 import com.example.fitlife.Model.Workout;
@@ -27,8 +25,10 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Create_Workout extends AppCompatActivity {
+
     private static final int REQUEST_IMAGE_PICK = 1001;
     private static final int REQUEST_ADD_LOCATION = 1002;
+    private static final int PERMISSION_READ_STORAGE = 100;
 
     private TextInputEditText etWorkoutName, etWorkoutDescription, etWorkoutEquipment, etWorkoutDuration;
     private Button btnAddImage, btnAddLocation, btnSaveWorkout;
@@ -43,12 +43,11 @@ public class Create_Workout extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_workout);
 
         dbHelper = DatabaseHelper.getInstance(this);
 
-        // Initialize
+        // Initialize views
         etWorkoutName = findViewById(R.id.et_workout_name);
         etWorkoutDescription = findViewById(R.id.et_workout_description);
         etWorkoutEquipment = findViewById(R.id.et_workout_equipment);
@@ -63,33 +62,52 @@ public class Create_Workout extends AppCompatActivity {
         tvLocationName = findViewById(R.id.tv_location_name);
         tvLocationAddress = findViewById(R.id.tv_location_address);
 
+        // Setup listeners
         btnAddImage.setOnClickListener(v -> pickImage());
         btnAddLocation.setOnClickListener(v -> addLocation());
         btnSaveWorkout.setOnClickListener(v -> saveWorkout());
         ivRemoveImage.setOnClickListener(v -> removeImage());
-
     }
 
     private void pickImage() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
+        // Check for permission based on Android version
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ uses READ_MEDIA_IMAGES
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_MEDIA_IMAGES}, PERMISSION_READ_STORAGE);
+            } else {
+                openImagePicker();
+            }
         } else {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, REQUEST_IMAGE_PICK);
+            // Android 12 and below use READ_EXTERNAL_STORAGE
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_READ_STORAGE);
+            } else {
+                openImagePicker();
+            }
         }
+    }
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_IMAGE_PICK);
     }
 
     private void addLocation() {
         Intent intent = new Intent(this, AddLocation.class);
         startActivityForResult(intent, REQUEST_ADD_LOCATION);
     }
+
     private void removeImage() {
         imagePath = null;
         cardImagePreview.setVisibility(View.GONE);
         ivWorkoutImage.setImageDrawable(null);
     }
+
     private void saveWorkout() {
         String name = etWorkoutName.getText().toString().trim();
         String description = etWorkoutDescription.getText().toString().trim();
@@ -174,6 +192,21 @@ public class Create_Workout extends AppCompatActivity {
                     tvLocationAddress.setText(workoutLocation.getAddress());
                     cardLocationInfo.setVisibility(View.VISIBLE);
                 }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_READ_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openImagePicker();
+            } else {
+                Toast.makeText(this, "Storage permission required to select image",
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }
